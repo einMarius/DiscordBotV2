@@ -13,7 +13,7 @@ import javax.security.auth.login.LoginException;
 
 public class Main {
 
-    final private String token = "ODQ0MTY2ODQzNzMxMjc5OTEy.YKOdow.jGjoXZ_SEy9wvotWkm3fIQWC0kk";
+    final private String token = "TOKEN";
 
     private Main instance;
     private CommandManager commandManager;
