@@ -1,6 +1,7 @@
 package me.marius.listeners;
 
 import me.marius.main.Main;
+import me.marius.mysql.MySQL;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -12,8 +13,7 @@ public class ReactionListener extends ListenerAdapter {
     private Main plugin;
     public ReactionListener(Main plugin) { this.plugin = plugin; }
 
-    private HashMap<Member, Long> cooldown = new HashMap<>();
-    private int cooldowntime = 2*60;
+    private static HashMap<Member, Long> cooldown = new HashMap<Member, Long>();
 
     @Override
     public void onMessageReactionAdd(MessageReactionAddEvent e) {
@@ -25,19 +25,30 @@ public class ReactionListener extends ListenerAdapter {
                 Member member = e.getMember();
 
                 if(cooldown.containsKey(member)){
-                    long secondsleft = ((cooldown.get(e.getMember()) / 1000) + cooldowntime) - (System.currentTimeMillis() / 1000);
+                    //3*60 für 3min Cooldown
+                    long secondsleft = ((cooldown.get(e.getMember()) / 1000) + 3*60) - (System.currentTimeMillis() / 1000);
                     if(secondsleft > 0){
                         System.out.println(e.getMember().getUser().getName() + " hat eine Reaktion hinzugefügt, obwohl der Cooldown für ihn noch aktiviert ist");
-                        plugin.getMySQL().setPunkte(member.getId(), member.getUser().getName(), 0, 0, 1);
+                        MySQL.setPunkte(member.getId(), member.getUser().getName(), 0, 0, 1, 0);
+                    } else {
+                        if (!MySQL.userIsExisting(e.getMember().getId())) {
+                            MySQL.createNewPlayer(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
+                            e.getMember().getGuild().addRoleToMember(e.getMember().getId(), e.getMember().getJDA().getRoleById(plugin.UNRANKED)).queue();
+                            cooldown.put(e.getMember(), System.currentTimeMillis());
+                        } else {
+                            MySQL.setPunkte(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
+                            cooldown.put(e.getMember(), System.currentTimeMillis());
+                            plugin.getLevelRoles().addRoles(e.getMember());
+                        }
                     }
                 } else {
 
-                    if(!plugin.getMySQL().userIsExisting(member.getId())){
-                        plugin.getMySQL().createNewPlayer(member.getId(), member.getUser().getName(), 1, 0, 1, 0);
-                        e.getMember().getGuild().addRoleToMember(e.getMember().getId(), e.getMember().getJDA().getRoleById("824983261197500440")).queue();
+                    if(!MySQL.userIsExisting(member.getId())){
+                        MySQL.createNewPlayer(member.getId(), member.getUser().getName(), 1, 0, 1, 0);
+                        e.getMember().getGuild().addRoleToMember(e.getMember().getId(), e.getMember().getJDA().getRoleById(plugin.UNRANKED)).queue();
                         cooldown.put(member, System.currentTimeMillis());
                     } else {
-                        plugin.getMySQL().setPunkte(e.getMember().getUser().getId(), e.getMember().getUser().getName(), 1, 0, 1);
+                        MySQL.setPunkte(e.getMember().getUser().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
                         cooldown.put(e.getMember(), System.currentTimeMillis());
                         plugin.getLevelRoles().addRoles(member);
                     }

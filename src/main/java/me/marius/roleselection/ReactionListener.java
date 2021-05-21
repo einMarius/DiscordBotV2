@@ -1,11 +1,15 @@
 package me.marius.roleselection;
 
+import me.marius.main.Main;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class ReactionListener extends ListenerAdapter {
+
+    private Main plugin;
+    public ReactionListener(Main plugin) { this.plugin = plugin; }
 
     private boolean isOnRunning;
     private boolean isOffRunning;
@@ -34,17 +38,17 @@ public class ReactionListener extends ListenerAdapter {
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("❗")) {
                                 Member m = e.getMember();
                                 // NEWS
-                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById("816243134090444812")).queue();
+                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById(plugin.NEWS_NOTIFY)).queue();
                             }
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("❕")) {
                                 Member m = e.getMember();
                                 // REGISTRATION
-                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById("816256434634358795")).queue();
+                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById(plugin.REGISTRATION_NOTIFY)).queue();
                             }
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("✅")) {
                                 Member m = e.getMember();
                                 // UMFRAGE
-                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById("816385581738885182")).queue();
+                                e.getGuild().addRoleToMember(m, e.getJDA().getRoleById(plugin.UMFRAGE_NOTFIY)).queue();
                             }
                             isOnRunning = false;
                         }
@@ -78,17 +82,17 @@ public class ReactionListener extends ListenerAdapter {
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("❗")) {
                                 // NEWS
                                 Member m = e.getMember();
-                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById("816243134090444812")).queue();
+                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById(plugin.NEWS_NOTIFY)).queue();
                             }
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("❕")) {
                                 Member m = e.getMember();
                                 // REGISTRATION
-                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById("816256434634358795")).queue();
+                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById(plugin.REGISTRATION_NOTIFY)).queue();
                             }
                             if (e.getReaction().getReactionEmote().getEmoji().equalsIgnoreCase("✅")) {
                                 Member m = e.getMember();
                                 // UMFRAGE
-                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById("816385581738885182")).queue();
+                                e.getGuild().removeRoleFromMember(m, e.getJDA().getRoleById(plugin.UMFRAGE_NOTFIY)).queue();
                             }
 
                             isOffRunning = false;

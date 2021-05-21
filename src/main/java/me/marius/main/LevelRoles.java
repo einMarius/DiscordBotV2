@@ -1,5 +1,6 @@
 package me.marius.main;
 
+import me.marius.mysql.MySQL;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 
@@ -18,17 +19,17 @@ public class LevelRoles {
         };
 
         //RANK 5
-        if(plugin.getMySQL().getPunkte(m.getId())+1 == 10000){
+        if(MySQL.getPunkte(m.getId())+1 == 10000){
 
-            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById("824982992170516500")).queue();
-            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById("824982938717782046")).queue();
+            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_4)).queue();
+            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_5)).queue();
 
             m.getUser().openPrivateChannel().queue(channel -> {
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("◽ **Levelup** ◽");
                 builder.setDescription("**Glückwunsch du bist jetzt Level 5**");
-                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById("824982938717782046").getName() + "` ", false);
+                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById(plugin.RANK_5).getName() + "` ", false);
                 builder.addField(">>> Neue Berechtigung", "Berechtigung: `No new permission.`", false);
                 builder.setThumbnail(m.getUser().getAvatarUrl());
                 builder.setFooter("Bot created by Marius", m.getGuild().getIconUrl());
@@ -46,17 +47,17 @@ public class LevelRoles {
             });
 
             //RANK 4
-        } else if(plugin.getMySQL().getPunkte(m.getId())+1 == 1000){
+        } else if(MySQL.getPunkte(m.getId())+1 == 1000){
 
-            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById("824983002970325002")).queue();
-            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById("824982992170516500")).queue();
+            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_3)).queue();
+            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_4)).queue();
 
             m.getUser().openPrivateChannel().queue(channel -> {
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("◽ **Levelup** ◽");
                 builder.setDescription("**Glückwunsch du bist jetzt Level 4**");
-                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById("824982992170516500").getName() + "` ", false);
+                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById(plugin.RANK_4).getName() + "` ", false);
                 builder.addField(">>> Neue Berechtigung", "Berechtigung: `No new permission.`", false);
                 builder.setThumbnail(m.getUser().getAvatarUrl());
                 builder.setFooter("Bot created by Marius", m.getGuild().getIconUrl());
@@ -74,17 +75,17 @@ public class LevelRoles {
             });
 
             //RANK 3
-        } else if(plugin.getMySQL().getPunkte(m.getId())+1 == 500){
+        } else if(MySQL.getPunkte(m.getId())+1 == 500){
 
-            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById("824983050458759198")).queue();
-            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById("824983002970325002")).queue();
+            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_2)).queue();
+            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_3)).queue();
 
             m.getUser().openPrivateChannel().queue(channel -> {
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("◽ **Levelup** ◽");
                 builder.setDescription("**Glückwunsch du bist jetzt Level 3**");
-                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById("824983002970325002").getName() + "` ", false);
+                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById(plugin.RANK_3).getName() + "` ", false);
                 builder.addField(">>> Neue Berechtigung", "Berechtigung: `No new permission.`", false);
                 builder.setThumbnail(m.getUser().getAvatarUrl());
                 builder.setFooter("Bot created by Marius", m.getGuild().getIconUrl());
@@ -102,17 +103,17 @@ public class LevelRoles {
             });
 
             //RANK 2
-        } else if(plugin.getMySQL().getPunkte(m.getId())+1 == 100){
+        } else if(MySQL.getPunkte(m.getId())+1 == 100){
 
-            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById("824983198039015444")).queue();
-            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById("824983050458759198")).queue();
+            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_1)).queue();
+            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_2)).queue();
 
             m.getUser().openPrivateChannel().queue(channel -> {
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("◽ **Levelup** ◽");
                 builder.setDescription("**Glückwunsch du bist jetzt Level 2**");
-                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById("824983050458759198").getName() + "` ", false);
+                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById(plugin.RANK_2).getName() + "` ", false);
                 builder.addField(">>> Neue Berechtigung", "Berechtigung: `No new permission.`", false);
                 builder.setThumbnail(m.getUser().getAvatarUrl());
                 builder.setFooter("Bot created by Marius", m.getGuild().getIconUrl());
@@ -130,17 +131,17 @@ public class LevelRoles {
             });
 
             //RANK 1
-        } else if(plugin.getMySQL().getPunkte(m.getId())+1 == 50){
+        } else if(MySQL.getPunkte(m.getId())+1 == 50){
 
-            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById("824983261197500440")).queue();
-            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById("824983198039015444")).queue();
+            m.getGuild().removeRoleFromMember(m.getId(), m.getJDA().getRoleById(plugin.UNRANKED)).queue();
+            m.getGuild().addRoleToMember(m.getId(), m.getJDA().getRoleById(plugin.RANK_1)).queue();
 
             m.getUser().openPrivateChannel().queue(channel -> {
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("◽ **Levelup** ◽");
                 builder.setDescription("**Glückwunsch du bist jetzt Level 1**");
-                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById("824977512639496222").getName() + "` ", false);
+                builder.addField(">>> Neue Rolle: ", "Rolle: `" + m.getJDA().getRoleById(plugin.RANK_1).getName() + "` ", false);
                 builder.addField(">>> Neue Berechtigung", "Berechtigung: `No new permission.`", false);
                 builder.setThumbnail(m.getUser().getAvatarUrl());
                 builder.setFooter("Bot created by Marius", m.getGuild().getIconUrl());

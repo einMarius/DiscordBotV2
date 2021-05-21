@@ -6,16 +6,16 @@ import java.util.ArrayList;
 public class MySQL {
 
     private static Connection con;
-    private String host = "localhost";
-    private int port = 3306;
-    private String database = "discordbot";
-    private String username = "root";
-    private String password = "pP8nt2J9t5xpdUiN";
+    private static String host = "localhost";
+    private static int port = 3306;
+    private static String database = "discordbot";
+    private static String username = "root";
+    private static String password = "pP8nt2J9t5xpdUiN";
 
-    private boolean isRunningCreateNewPlayer;
-    private boolean isRunningUpdatePlayer;
+    private static boolean isRunningCreateNewPlayer;
+    private static boolean isRunningUpdatePlayer;
 
-    public boolean connect() {
+    public static boolean connect() {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -29,7 +29,7 @@ public class MySQL {
         return false;
     }
 
-    public boolean isConnected() { return (con == null ? false : true); }
+    public static boolean isConnected() { return (con == null ? false : true); }
 
     public void disconnect() {
         try {
@@ -39,7 +39,7 @@ public class MySQL {
         }
     }
 
-    public boolean userIsExisting(String userID){
+    public static boolean userIsExisting(String userID){
         if(!isConnected())
             if(!connect())
                 return false;
@@ -58,7 +58,7 @@ public class MySQL {
         return false;
     }
 
-    public void createTables(){
+    public static void createTables(){
         if(!isConnected())
             return;
 
@@ -77,7 +77,7 @@ public class MySQL {
         }
     }
 
-    public void createNewPlayer(String userID, String userName, int punkte, int messages, int reactions, int channeltime){
+    public static void createNewPlayer(String userID, String userName, int punkte, int messages, int reactions, int joinedchannel){
 
         isRunningCreateNewPlayer = !isRunningCreateNewPlayer;
 
@@ -94,13 +94,13 @@ public class MySQL {
                         return;
 
                 try {
-                    PreparedStatement ps = con.prepareStatement("INSERT INTO ranking (UserID,Username,Punkte,Nachrichten,Reaktionen,ChannelTime) VALUES (?,?,?,?,?,?)");
+                    PreparedStatement ps = con.prepareStatement("INSERT INTO ranking (UserID,Username,Punkte,Nachrichten,Reaktionen,JoinedChannel) VALUES (?,?,?,?,?,?)");
                     ps.setString(1, userID);
                     ps.setString(2, userName);
                     ps.setInt(3, punkte);
                     ps.setInt(4, messages);
                     ps.setInt(5, reactions);
-                    ps.setInt(6, 0);
+                    ps.setInt(6, joinedchannel);
                     ps.executeUpdate();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -111,7 +111,7 @@ public class MySQL {
         }).start();
     }
 
-    public void setPunkte(String userID, String username, int punkte, int nachrichten, int reaktionen){
+    public static void setPunkte(String userID, String username, int punkte, int nachrichten, int reaktionen, int joinedChannels){
 
         isRunningUpdatePlayer = !isRunningUpdatePlayer;
 
@@ -128,12 +128,13 @@ public class MySQL {
                         return;
 
                 try {
-                    PreparedStatement ps = con.prepareStatement("UPDATE ranking SET Username = ?, Punkte = ?, Nachrichten = ?, Reaktionen = ? WHERE UserID = ?");
+                    PreparedStatement ps = con.prepareStatement("UPDATE ranking SET Username = ?, Punkte = ?, Nachrichten = ?, Reaktionen = ?, JoinedChannel = ? WHERE UserID = ?");
                     ps.setString(1, username);
                     ps.setInt(2, getPunkte(userID)+punkte);
                     ps.setInt(3, getNachrichten(userID)+nachrichten);
                     ps.setInt(4, getReaktionen(userID)+reaktionen);
-                    ps.setString(5, userID);
+                    ps.setInt(5, getJoinedChannels(userID)+joinedChannels);
+                    ps.setString(6, userID);
                     ps.executeUpdate();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -144,7 +145,7 @@ public class MySQL {
         }).start();
     }
 
-    public int getReaktionen(String userID){
+    public static int getReaktionen(String userID){
         try{
             PreparedStatement ps = con.prepareStatement("SELECT Reaktionen FROM ranking WHERE UserID = ?");
             ps.setString(1, userID);
@@ -158,7 +159,7 @@ public class MySQL {
         return 0;
     }
 
-    public int getNachrichten(String userID){
+    public static int getNachrichten(String userID){
         try{
             PreparedStatement ps = con.prepareStatement("SELECT Nachrichten FROM ranking WHERE UserID = ?");
             ps.setString(1, userID);
@@ -172,7 +173,7 @@ public class MySQL {
         return 0;
     }
 
-    public int getPunkte(String userID){
+    public static int getPunkte(String userID){
 
         try {
             PreparedStatement ps = con.prepareStatement("SELECT Punkte FROM ranking WHERE UserID = ?");
@@ -186,7 +187,7 @@ public class MySQL {
         return 0;
     }
 
-    public ArrayList<String> getRanking(){
+    public static ArrayList<String> getRanking(){
         if(!isConnected())
             if(!connect())
                 return null;
@@ -207,7 +208,7 @@ public class MySQL {
         return ranking;
     }
 
-    public int getRank(String UserID){
+    public static int getRank(String UserID){
         if (!isConnected())
             if (!connect())
                 return 0;
@@ -220,6 +221,23 @@ public class MySQL {
                 return rs.getInt("COUNT(*)");
             }
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int getJoinedChannels(String UserID) {
+        if(!isConnected())
+            if(!connect())
+                return 0;
+
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT JoinedChannel FROM ranking WHERE UserID = ?");
+            ps.setString(1, UserID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+                return rs.getInt("JoinedChannel");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

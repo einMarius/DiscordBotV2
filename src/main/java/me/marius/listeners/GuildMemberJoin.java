@@ -1,6 +1,7 @@
 package me.marius.listeners;
 
 import me.marius.main.Main;
+import me.marius.mysql.MySQL;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -41,8 +42,8 @@ public class GuildMemberJoin extends ListenerAdapter {
         e.getGuild().getDefaultChannel().sendMessage(builder.build()).queue();
         builder.clear();
 
-        if(!plugin.getMySQL().userIsExisting(e.getMember().getId())) {
-            e.getMember().getGuild().addRoleToMember(e.getMember(), e.getJDA().getRoleById("824983261197500440")).queue();
+        if(!MySQL.userIsExisting(e.getMember().getId())) {
+            e.getMember().getGuild().addRoleToMember(e.getMember(), e.getJDA().getRoleById(plugin.UNRANKED)).queue();
         }
     }
 

@@ -24,20 +24,24 @@ public class CommandListener extends ListenerAdapter {
         if(e.isFromType(ChannelType.TEXT)) {
             TextChannel channel = e.getTextChannel();
             if (message.startsWith("#")) {
-                String args[] = message.substring(1).split(" ");
-                if (args.length > 0) {
-                    if (!plugin.getCommandManager().perform(args[0], e.getMember(), channel, e.getMessage())) {
 
-                        EmbedBuilder info = new EmbedBuilder()
-                                .setTitle("Information")
-                                .setDescription("Der Befehl ist nicht bekannt")
-                                .setFooter("Created by Marius", e.getGuild().getIconUrl())
-                                .setColor(Color.RED);
+                if(e.getMember().getUser().getIdLong() == 374932063423561729L) {
 
-                        channel.sendTyping().queue();
-                        channel.sendMessage(info.build()).complete().delete().queueAfter(6, TimeUnit.SECONDS);
-                        info.clear();
+                    String args[] = message.substring(1).split(" ");
+                    if (args.length > 0) {
+                        if (!plugin.getCommandManager().perform(args[0], e.getMember(), channel, e.getMessage())) {
 
+                            EmbedBuilder info = new EmbedBuilder()
+                                    .setTitle("Information")
+                                    .setDescription("Der Befehl ist nicht bekannt")
+                                    .setFooter("Created by Marius", e.getGuild().getIconUrl())
+                                    .setColor(Color.RED);
+
+                            channel.sendTyping().queue();
+                            channel.sendMessage(info.build()).complete().delete().queueAfter(6, TimeUnit.SECONDS);
+                            info.clear();
+
+                        }
                     }
                 }
             }
