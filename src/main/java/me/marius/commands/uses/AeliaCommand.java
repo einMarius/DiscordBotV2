@@ -23,7 +23,7 @@ public class AeliaCommand implements ServerCommand {
                 channel.sendTyping();
 
                 //MYSQL
-                Utils.addStatsCommand(1, m, 1);
+                Utils.addStatsCommand(3, m, 1);
 
                 EmbedBuilder aelia = new EmbedBuilder()
                         .setTitle(" **LATEIN** ")

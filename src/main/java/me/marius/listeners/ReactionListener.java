@@ -25,7 +25,11 @@ public class ReactionListener extends ListenerAdapter {
                 Member member = e.getMember();
 
                 if(cooldown.containsKey(member)){
-                    //3*60 für 3min Cooldown
+                    /*
+                    *
+                    * 3*60 für 30min Countdown
+                    *
+                    */
                     long secondsleft = ((cooldown.get(e.getMember()) / 1000) + 3*60) - (System.currentTimeMillis() / 1000);
                     if(secondsleft > 0){
                         System.out.println(e.getMember().getUser().getName() + " hat eine Reaktion hinzugefügt, obwohl der Cooldown für ihn noch aktiviert ist");

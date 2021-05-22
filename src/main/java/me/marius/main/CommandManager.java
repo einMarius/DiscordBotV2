@@ -1,9 +1,7 @@
 package me.marius.main;
 
 import me.marius.commands.types.ServerCommand;
-import me.marius.commands.uses.AeliaCommand;
-import me.marius.commands.uses.ClearCommand;
-import me.marius.commands.uses.StatsCommand;
+import me.marius.commands.uses.*;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -21,6 +19,9 @@ public class CommandManager {
         this.commands.put("clear", new ClearCommand());
         this.commands.put("aelia", new AeliaCommand());
         this.commands.put("stats", new StatsCommand());
+        this.commands.put("addroles", new AddRolesCommand());
+        this.commands.put("createteams", new CreateTeamsCommand());
+        this.commands.put("gay", new GayCommand());
 
     }
 

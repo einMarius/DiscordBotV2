@@ -82,9 +82,7 @@ public class ClearCommand implements ServerCommand {
                 message.delete().queue();
                 channel.sendMessage("Benutze: #clear AMOUNT").complete().delete().queueAfter(5, TimeUnit.SECONDS);
             }
-        } else {
-            message.delete().queue();
-            channel.sendMessage("Dazu hast du keine Berechtigung!").queue();
-        }
+        } else
+            channel.sendMessage("Dazu hast du keine Berechtigung!").complete().delete().queueAfter(5, TimeUnit.SECONDS);
     }
 }
