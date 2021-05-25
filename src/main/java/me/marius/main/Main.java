@@ -6,12 +6,17 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Member;
 
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    final private String token = "TOKEN";
+    final private String token = "ODQ0MTY2ODQzNzMxMjc5OTEy.YKOdow.eHbURFyINlPGxS7N1_PAxxxnbuA";
 
     /*
     *
@@ -56,6 +61,10 @@ public class Main {
 
     private JDABuilder jdaBuilder;
 
+    //InChannelPoints
+    private Thread points;
+    public static ArrayList<Member> invoicechannel = new ArrayList<>();
+
     public static void main(String[] args){
 
         new Main();
@@ -82,7 +91,7 @@ public class Main {
         //--------------Bot-Register---------------//
         //jdaBuilder.addEventListeners(new GuildMemberJoin(this));
         //jdaBuilder.addEventListeners(new GuildMemberLeave());
-        jdaBuilder.addEventListeners(new JoinChannelEvent(this));
+        jdaBuilder.addEventListeners(new JoinLeaveSwitchChannelEvent(this));
         jdaBuilder.addEventListeners(new ReactionListener(this));
         jdaBuilder.addEventListeners(new CommandListener(this));
         //--------------Bot-Register---------------//
@@ -102,4 +111,28 @@ public class Main {
     public CommandManager getCommandManager() { return commandManager; }
     public LevelRoles getLevelRoles() { return levelRoles; }
     public Utils getUtils() { return utils; }
+
+    public void runAddVoiceChannelPoints(Member m) {
+        this.points = new Thread(() -> {
+            long time = System.currentTimeMillis();
+            while (true) {
+                if (System.currentTimeMillis() >= time + 1000 * 60) {
+                    time = System.currentTimeMillis();
+
+                    if(invoicechannel.contains(m)) {
+                        if (!MySQL.userIsExisting(m.getId())) {
+                            MySQL.createNewPlayer(m.getId(), m.getUser().getName(), 0, 0, 0, 1, 0);
+                            System.out.println(m.getUser().getName() + " war eine Minute im Channel!");
+                        } else {
+                            MySQL.setPunkte(m.getId(), m.getUser().getName(), 0, 0, 0, 1, 0);
+                            System.out.println(m.getUser().getName() + " war eine Minute im Channel!");
+                        }
+                    }
+                }
+            }
+        });
+        this.points.setName("AddVoiceChannelPoints");
+        this.points.start();
+    }
+
 }

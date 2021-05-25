@@ -22,22 +22,22 @@ public class Utils {
                 return;
             } else {
                 if (!MySQL.userIsExisting(member.getId())) {
-                    MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0);
+                    MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
                     member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
                     cooldowntime.put(member, System.currentTimeMillis());
                 } else {
-                    MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0);
+                    MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
                     cooldowntime.put(member, System.currentTimeMillis());
                     plugin.getLevelRoles().addRoles(member);
                 }
             }
         } else {
             if (!MySQL.userIsExisting(member.getId())) {
-                MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0);
+                MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
                 member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
                 cooldowntime.put(member, System.currentTimeMillis());
             } else {
-                MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0);
+                MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
                 cooldowntime.put(member, System.currentTimeMillis());
                 plugin.getLevelRoles().addRoles(member);
             }

@@ -28,7 +28,7 @@ public class StatsCommand implements ServerCommand {
 
         String args[] = message.getContentDisplay().split(" ");
 
-        if(channel.getIdLong() == Main.STATS){
+        if(channel.getIdLong() == Main.STATS || channel.getIdLong() == 825331970166751252L){
             if(args.length == 1) {
                 message.delete().queue();
                 channel.sendTyping().queue();
@@ -57,6 +57,7 @@ public class StatsCommand implements ServerCommand {
                                 .addField(">>> Die gesendeten Nachrichten", "Nachrichten: `" + MySQL.getNachrichten(m.getId()) + "`", false)
                                 .addField(">>> Die hinzugefügten Reaktionen", "Reaktionen: `" + MySQL.getReaktionen(m.getId()) + "`", false)
                                 .addField(">>> Die Anzahl der gejointen Channels", "Joined: `" + MySQL.getJoinedChannels(m.getId()) + "`", false)
+                                .addField(">>> Die Minutenzahl der Zeit im Channel", "Minuten: `" + MySQL.getChannelTime(m.getId()) + "`", false)
                                 .setThumbnail(m.getUser().getAvatarUrl())
                                 .setFooter("Bot created by Marius", m.getGuild().getIconUrl())
                                 .setColor(Color.decode("0x" + colour));
@@ -99,6 +100,7 @@ public class StatsCommand implements ServerCommand {
                                     .addField(">>> Die gesendeten Nachrichten", "Nachrichten: `" + MySQL.getNachrichten(targett.getId()) + "`", false)
                                     .addField(">>> Die hinzugefügten Reaktionen", "Reaktionen: `" + MySQL.getReaktionen(targett.getId()) + "`", false)
                                     .addField(">>> Die Anzahl der gejointen Channels", "Joined: `" + MySQL.getJoinedChannels(targett.getId()) + "`", false)
+                                    .addField(">>> Die Minutenzahl der Zeit im Channel", "Minuten: `" + MySQL.getChannelTime(targett.getId()) + "`", false)
                                     .setThumbnail(targett.getUser().getAvatarUrl())
                                     .setFooter("Bot created by Marius", m.getGuild().getIconUrl())
                                     .setColor(Color.decode("0x" + colour));

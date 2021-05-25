@@ -33,14 +33,14 @@ public class ReactionListener extends ListenerAdapter {
                     long secondsleft = ((cooldown.get(e.getMember()) / 1000) + 3*60) - (System.currentTimeMillis() / 1000);
                     if(secondsleft > 0){
                         System.out.println(e.getMember().getUser().getName() + " hat eine Reaktion hinzugefügt, obwohl der Cooldown für ihn noch aktiviert ist");
-                        MySQL.setPunkte(member.getId(), member.getUser().getName(), 0, 0, 1, 0);
+                        MySQL.setPunkte(member.getId(), member.getUser().getName(), 0, 0, 1, 0, 0);
                     } else {
                         if (!MySQL.userIsExisting(e.getMember().getId())) {
-                            MySQL.createNewPlayer(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
+                            MySQL.createNewPlayer(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0, 0);
                             e.getMember().getGuild().addRoleToMember(e.getMember().getId(), e.getMember().getJDA().getRoleById(plugin.UNRANKED)).queue();
                             cooldown.put(e.getMember(), System.currentTimeMillis());
                         } else {
-                            MySQL.setPunkte(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
+                            MySQL.setPunkte(e.getMember().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0, 0);
                             cooldown.put(e.getMember(), System.currentTimeMillis());
                             plugin.getLevelRoles().addRoles(e.getMember());
                         }
@@ -48,11 +48,11 @@ public class ReactionListener extends ListenerAdapter {
                 } else {
 
                     if(!MySQL.userIsExisting(member.getId())){
-                        MySQL.createNewPlayer(member.getId(), member.getUser().getName(), 1, 0, 1, 0);
+                        MySQL.createNewPlayer(member.getId(), member.getUser().getName(), 1, 0, 1, 0, 0);
                         e.getMember().getGuild().addRoleToMember(e.getMember().getId(), e.getMember().getJDA().getRoleById(plugin.UNRANKED)).queue();
                         cooldown.put(member, System.currentTimeMillis());
                     } else {
-                        MySQL.setPunkte(e.getMember().getUser().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0);
+                        MySQL.setPunkte(e.getMember().getUser().getId(), e.getMember().getUser().getName(), 1, 0, 1, 0, 0);
                         cooldown.put(e.getMember(), System.currentTimeMillis());
                         plugin.getLevelRoles().addRoles(member);
                     }
