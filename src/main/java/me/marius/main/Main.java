@@ -10,13 +10,10 @@ import net.dv8tion.jda.api.entities.Member;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    final private String token = "ODQ0MTY2ODQzNzMxMjc5OTEy.YKOdow.eHbURFyINlPGxS7N1_PAxxxnbuA";
+    final private String token = "TOKEN";
 
     /*
     *
