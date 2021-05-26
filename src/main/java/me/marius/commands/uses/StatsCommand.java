@@ -28,7 +28,7 @@ public class StatsCommand implements ServerCommand {
 
         String args[] = message.getContentDisplay().split(" ");
 
-        if(channel.getIdLong() == Main.STATS || channel.getIdLong() == 825331970166751252L){
+        if(channel.getIdLong() == Main.STATS || channel.getIdLong() == Main.ALLGEMEIN_TEST){
             if(args.length == 1) {
                 message.delete().queue();
                 channel.sendTyping().queue();
@@ -72,7 +72,7 @@ public class StatsCommand implements ServerCommand {
 
                 Member targett = message.getMentionedMembers().get(0);
 
-                if(!(targett.getIdLong() == 844166843731279912L) && !(targett.getIdLong() == 235088799074484224L) && !(targett.getIdLong() == 252128902418268161L) && !(targett.getIdLong() == 811985115306655774L)){
+                if(!(targett.getIdLong() == Main.BABA_BOT_1) && !(targett.getIdLong() == Main.BABA_BOT_2) && !(targett.getIdLong() == Main.RYTHM_1) && !(targett.getIdLong() == Main.RYTHM_2)){
 
                     message.delete().queue();
                     channel.sendTyping().queue();

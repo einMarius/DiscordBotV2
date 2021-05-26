@@ -51,6 +51,19 @@ public class Main {
     final public static long ZITATE = 799597621224275988L;
     final public static long ABIIDEEN = 819166858497622026L;
 
+    final public static long ALLGEMEIN_TEST = 811935946064265229L;
+
+    /*
+    *
+    *Client Ids von BaumbalabungaV1, BaumbalabungaV2, Rythm1, Rythm2
+    *
+    */
+    final public static long BABA_BOT_1 = 811985115306655774L;
+    final public static long BABA_BOT_2 = 844166843731279912L;
+    final public static long RYTHM_1 = 235088799074484224L;
+    final public static long RYTHM_2 = 252128902418268161L;
+
+
     private Main instance;
     private CommandManager commandManager;
     private LevelRoles levelRoles;
@@ -91,6 +104,8 @@ public class Main {
         jdaBuilder.addEventListeners(new JoinLeaveSwitchChannelEvent(this));
         jdaBuilder.addEventListeners(new ReactionListener(this));
         jdaBuilder.addEventListeners(new CommandListener(this));
+
+        jdaBuilder.addEventListeners(new me.marius.roleselection.ReactionListener(this));
         //--------------Bot-Register---------------//
 
         try {
@@ -119,10 +134,8 @@ public class Main {
                     if(invoicechannel.contains(m)) {
                         if (!MySQL.userIsExisting(m.getId())) {
                             MySQL.createNewPlayer(m.getId(), m.getUser().getName(), 0, 0, 0, 1, 0);
-                            System.out.println(m.getUser().getName() + " war eine Minute im Channel!");
                         } else {
                             MySQL.setPunkte(m.getId(), m.getUser().getName(), 0, 0, 0, 1, 0);
-                            System.out.println(m.getUser().getName() + " war eine Minute im Channel!");
                         }
                     }
                 }

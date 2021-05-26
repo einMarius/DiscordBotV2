@@ -17,7 +17,7 @@ public class AeliaCommand implements ServerCommand {
 
         String args[] = message.getContentDisplay().split(" ");
 
-        if(channel.getIdLong() == Main.SPAMALLE){
+        if(channel.getIdLong() == Main.SPAMALLE || channel.getIdLong() == Main.ALLGEMEIN_TEST){
             if(args.length == 1){
                 message.delete().queue();
                 channel.sendTyping();

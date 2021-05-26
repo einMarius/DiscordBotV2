@@ -18,14 +18,23 @@ public class GayCommand implements ServerCommand {
 
         String args[] = message.getContentDisplay().split(" ");
 
-        if(channel.getIdLong() == Main.KOMISCHELINKS || channel.getIdLong() == Main.SPAMALLE) {
+        if(channel.getIdLong() == Main.KOMISCHELINKS || channel.getIdLong() == Main.SPAMALLE || channel.getIdLong() == Main.ALLGEMEIN_TEST) {
             if(args.length >= 2){
 
                 message.delete().queue();
                 channel.sendTyping().queue();
 
+                Member targett = message.getMentionedMembers().get(0);
+
+                if(!(targett.getIdLong() == Main.BABA_BOT_1) && !(targett.getIdLong() == Main.BABA_BOT_2) && !(targett.getIdLong() == Main.RYTHM_1) && !(targett.getIdLong() == Main.RYTHM_2)) {
 
 
+
+                }else {
+                    message.delete().queue();
+                    channel.sendTyping().queue();
+                    channel.sendMessage("Nicht verfügbar...").complete().delete().queueAfter(5, TimeUnit.SECONDS);
+                }
             }else {
                 message.delete().queue();
                 channel.sendTyping().queue();
@@ -33,6 +42,7 @@ public class GayCommand implements ServerCommand {
             }
         }else {
             message.delete().queue();
+            channel.sendTyping().queue();
             channel.sendMessage("Benutze für den Command nicht diesen Channel!").complete().delete().queueAfter(5, TimeUnit.SECONDS);
         }
     }

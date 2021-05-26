@@ -58,6 +58,11 @@ public class JoinLeaveSwitchChannelEvent extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(GuildVoiceMoveEvent e){
 
+        if(!Main.invoicechannel.contains(e.getMember())) {
+            Main.invoicechannel.add(e.getMember());
+            plugin.runAddVoiceChannelPoints(e.getMember());
+        }
+
         if (cooldown.containsKey(e.getEntity())) {
             long secondsleft = ((cooldown.get(e.getEntity()) / 1000) + 10*60) - (System.currentTimeMillis() / 1000);
             if (secondsleft > 0) {
@@ -86,6 +91,9 @@ public class JoinLeaveSwitchChannelEvent extends ListenerAdapter {
                 plugin.getLevelRoles().addRoles(e.getEntity());
             }
         }
+
+
+
     }
 
     @Override

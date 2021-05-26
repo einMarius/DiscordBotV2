@@ -34,7 +34,7 @@ public class CreateTeamsCommand implements ServerCommand {
 
         String args[] = message.getContentDisplay().substring(12).split(" ");
 
-        if(channel.getIdLong() == Main.KOMISCHELINKS || channel.getIdLong() == 811935946064265229L) {
+        if(channel.getIdLong() == Main.KOMISCHELINKS || channel.getIdLong() == Main.ALLGEMEIN_TEST) {
             if(args.length == 9) {
 
                 message.delete().queue();

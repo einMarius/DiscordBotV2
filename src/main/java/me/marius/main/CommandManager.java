@@ -19,9 +19,9 @@ public class CommandManager {
         this.commands.put("clear", new ClearCommand());
         this.commands.put("aelia", new AeliaCommand());
         this.commands.put("stats", new StatsCommand());
-        this.commands.put("addroles", new AddRolesCommand());
         this.commands.put("createteams", new CreateTeamsCommand());
         this.commands.put("gay", new GayCommand());
+        this.commands.put("role-selection", new RoleSelectionCommand());
 
     }
 
