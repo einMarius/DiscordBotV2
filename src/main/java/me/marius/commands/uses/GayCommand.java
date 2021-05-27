@@ -2,10 +2,16 @@ package me.marius.commands.uses;
 
 import me.marius.commands.types.ServerCommand;
 import me.marius.main.Main;
+import me.marius.main.Utils;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.awt.*;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class GayCommand implements ServerCommand {
@@ -28,7 +34,32 @@ public class GayCommand implements ServerCommand {
 
                 if(!(targett.getIdLong() == Main.BABA_BOT_1) && !(targett.getIdLong() == Main.BABA_BOT_2) && !(targett.getIdLong() == Main.RYTHM_1) && !(targett.getIdLong() == Main.RYTHM_2)) {
 
+                    //MYSQL
+                    Utils.addStatsCommand(1, m, 1);
 
+                    //Länge
+                    Random rand = new Random();
+                    int i = rand.nextInt(percentage.length);
+                    String prozentzahl = percentage[i];
+                    //Color
+                    Random rand2 = new Random();
+                    int i2 = rand2.nextInt(colours.length);
+                    String colour = colours[i2];
+
+                    EmbedBuilder gay = new EmbedBuilder()
+                            .setTitle("◽ **Wie Gay ist " + targett.getUser().getName() + "?** ◽")
+                            .setDescription("**Hier siehst du die Prozentzahl (Wurde überprüft)**")
+                            .addField(">>> Gay-Prozentzahl", targett.getUser().getName() + " ist zu: `" + prozentzahl + "` Gay!", false)
+                            .setThumbnail(targett.getUser().getAvatarUrl())
+                            .setFooter(m.getUser().getName() + " wollte die wahre Gay-Pronzentzahl von " + targett.getUser().getName(), m.getGuild().getIconUrl())
+                            .setTimestamp(LocalDateTime.now(Clock.systemUTC()))
+                            .setColor(Color.decode("0x"+colour));
+
+                    channel.sendMessage(gay.build()).queue(embedMessage -> {
+                        embedMessage.addReaction("✅").queue();
+                        embedMessage.addReaction("❌").queue();
+                    });
+                    gay.clear();
 
                 }else {
                     message.delete().queue();

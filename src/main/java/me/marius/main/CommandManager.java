@@ -22,6 +22,18 @@ public class CommandManager {
         this.commands.put("createteams", new CreateTeamsCommand());
         this.commands.put("gay", new GayCommand());
         this.commands.put("role-selection", new RoleSelectionCommand());
+        this.commands.put("hesterno", new HesternoCommand());
+        this.commands.put("plsmeme", new MemeCommand());
+        this.commands.put("news", new NewsCommand());
+        this.commands.put("odetamo", new OdetAmoCommand());
+        this.commands.put("pp", new PPCommand());
+        this.commands.put("phoebe", new PhoebeCommand());
+        this.commands.put("sexte", new SexteCommand());
+        this.commands.put("thais", new ThaisCommand());
+        this.commands.put("tongilianus", new TongilianusCommand());
+        this.commands.put("top", new TopCommand());
+        this.commands.put("umfrage", new UmfrageCommand());
+        this.commands.put("zitat", new ZitateCommand());
 
     }
 

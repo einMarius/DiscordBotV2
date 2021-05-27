@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.sharding.ShardManager;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
@@ -27,9 +28,9 @@ public class Main {
     final public long RANK_4 = 824982992170516500L;
     final public long RANK_5 = 824982938717782046L;
 
-    final public long NEWS_NOTIFY = 816243134090444812L;
+    final static public long NEWS_NOTIFY = 816243134090444812L;
     final public long REGISTRATION_NOTIFY = 816256434634358795L;
-    final public long UMFRAGE_NOTFIY = 816385581738885182L;
+    final static public long UMFRAGE_NOTFIY = 816385581738885182L;
 
     /*
     *

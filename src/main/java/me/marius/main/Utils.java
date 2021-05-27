@@ -12,35 +12,51 @@ public class Utils {
 
     private static HashMap<Member, Long> cooldowntime = new HashMap<Member, Long>();
 
+    private static boolean isRunningaddStatsCommand;
+
     public static void addStatsCommand(long cooldown, Member member, int punkte){
 
-        if (cooldowntime.containsKey(member)) {
-            long secondsleft = ((cooldowntime.get(member) / 1000) + cooldown*60) - (System.currentTimeMillis() / 1000);
-            if (secondsleft > 0) {
-                System.out.println(member.getUser().getName() + " hat einen Befehl ausgeführt, obwohl der Cooldown für ihn noch aktiviert ist! (Keine zusätzlichen Punkte)");
-                System.out.println(secondsleft);
-                return;
-            } else {
-                if (!MySQL.userIsExisting(member.getId())) {
-                    MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
-                    member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
-                    cooldowntime.put(member, System.currentTimeMillis());
-                } else {
-                    MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
-                    cooldowntime.put(member, System.currentTimeMillis());
-                    plugin.getLevelRoles().addRoles(member);
+        isRunningaddStatsCommand = !isRunningaddStatsCommand;
+
+        new Thread(() -> {
+            while(isRunningaddStatsCommand) {
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                Thread.currentThread().setName("addStatsCommand");
+
+                if (cooldowntime.containsKey(member)) {
+                    long secondsleft = ((cooldowntime.get(member) / 1000) + cooldown * 60) - (System.currentTimeMillis() / 1000);
+                    if (secondsleft > 0) {
+                        System.out.println(member.getUser().getName() + " hat einen Befehl ausgeführt, obwohl der Cooldown für ihn noch aktiviert ist! (Keine zusätzlichen Punkte)");
+                        return;
+                    } else {
+                        if (!MySQL.userIsExisting(member.getId())) {
+                            MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
+                            member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
+                            cooldowntime.put(member, System.currentTimeMillis());
+                        } else {
+                            MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
+                            cooldowntime.put(member, System.currentTimeMillis());
+                            plugin.getLevelRoles().addRoles(member);
+                        }
+                    }
+                } else {
+                    if (!MySQL.userIsExisting(member.getId())) {
+                        MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
+                        member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
+                        cooldowntime.put(member, System.currentTimeMillis());
+                    } else {
+                        MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
+                        cooldowntime.put(member, System.currentTimeMillis());
+                        plugin.getLevelRoles().addRoles(member);
+                    }
+                }
+
+                isRunningaddStatsCommand = false;
             }
-        } else {
-            if (!MySQL.userIsExisting(member.getId())) {
-                MySQL.createNewPlayer(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
-                member.getGuild().addRoleToMember(member.getId(), member.getJDA().getRoleById(plugin.UNRANKED)).queue();
-                cooldowntime.put(member, System.currentTimeMillis());
-            } else {
-                MySQL.setPunkte(member.getId(), member.getUser().getName(), punkte, 0, 0, 0, 0);
-                cooldowntime.put(member, System.currentTimeMillis());
-                plugin.getLevelRoles().addRoles(member);
-            }
-        }
+        }).start();
     }
 }

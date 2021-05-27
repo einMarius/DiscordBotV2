@@ -201,13 +201,33 @@ public class MySQL {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM ranking ORDER BY Punkte DESC LIMIT 10");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                ranking.add(rs.getString("UserID"));
+                ranking.add(rs.getString("Username"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         return ranking;
+    }
+
+    public static ArrayList<Integer> getPunkteForTop(){
+        if(!isConnected())
+            if(!connect())
+                return null;
+
+        ArrayList<Integer> punkte = new ArrayList<>();
+        punkte.clear();
+
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ranking ORDER BY Punkte DESC LIMIT 10");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+                punkte.add(rs.getInt("Punkte"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return punkte;
     }
 
     public static int getRank(String UserID){
